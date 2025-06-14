@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react'
+import type {components} from './api-types';
 
-interface Todo {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-  created_at: string;
-}
+type Todo = components['schemas']['Todo'];
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
