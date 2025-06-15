@@ -2,3 +2,6 @@
 /db.sqlite3
 /.env.local
 /.env.production
+/.env
+/staticfiles/
+/docker_data/
