@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    ```
   ```shell
   # Шаг 2. Превращение в ts для дальнейшего использования
-  npx openapi-typescript schema.yaml -o frontend/src/api-types.ts 
+  npx openapi-typescript schema.yaml -o frontend/src/api/api-types.ts 
    ```
  
 ## [0.3.0] - 2025-06-15
@@ -52,11 +52,8 @@ docker-compose logs -f <service_name>
   - Фронтенд Nginx проксирует бекэнд и выдает статику фронтенда
   - Настроен volume для постоянного хранения данных БД(важно)
   - Веб интерфейс DRF доступен на порту http://localhost:8000/api/ напрямую и не зависит от фронта
-
 ### Changed
 - .env я не понял как разделить на прод и локал, docker только так подхватывает. Пускай пока так используется.
-
-## [0.4.0] - 2025-06-16
 ### Added
 - Было создано приложение account для авторизации и управления пользователями
   - Реализована JWT авторизация
@@ -64,6 +61,8 @@ docker-compose logs -f <service_name>
 - Добавлены endpoints для работы с токенами
   - получение пары токенов `/api/auth/token/`
   - обновление токенов `/api/auth/token/refresh/`
-
 ### Changed
 - Обновлены типы для фронтенд
+## [0.4.0] - 2025-06-16
+### Added
+- реализовать интеграцию с API авторизации на фронтенд

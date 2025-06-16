@@ -1,35 +1,16 @@
-import { useEffect, useState } from 'react'
-import type {components} from './api-types';
-
-type Todo = components['schemas']['Todo'];
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Todo from './pages/Todo';
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([])
-
-  useEffect(() => {
-    fetch('/api/todos/')
-      .then(res => res.json())
-      .then(data => setTodos(data))
-  }, [])
-
   return (
-    <div>
-      <h1>Todo List</h1>
-      <ul>
-        {todos.map(todo => (
-          <li key={todo.id}>
-            <h3>{todo.title}</h3>
-            <p>{todo.description}</p>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              readOnly
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Todo />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

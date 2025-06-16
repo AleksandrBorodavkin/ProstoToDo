@@ -3,7 +3,7 @@ from django.db import models
 
 class Task(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  # Ссылка на модель из account
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='tasks'
     )

@@ -124,7 +124,7 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        PatchedTodo: {
+        PatchedTask: {
             /** Format: uri */
             readonly url?: string;
             readonly id?: number;
@@ -146,7 +146,7 @@ export interface components {
              */
             email?: string;
         };
-        Todo: {
+        Task: {
             /** Format: uri */
             readonly url: string;
             readonly id: number;
@@ -413,7 +413,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"][];
+                    "application/json": components["schemas"]["Task"][];
                 };
             };
         };
@@ -427,9 +427,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Todo"];
-                "application/x-www-form-urlencoded": components["schemas"]["Todo"];
-                "multipart/form-data": components["schemas"]["Todo"];
+                "application/json": components["schemas"]["Task"];
+                "application/x-www-form-urlencoded": components["schemas"]["Task"];
+                "multipart/form-data": components["schemas"]["Task"];
             };
         };
         responses: {
@@ -438,7 +438,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"];
+                    "application/json": components["schemas"]["Task"];
                 };
             };
         };
@@ -460,7 +460,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"];
+                    "application/json": components["schemas"]["Task"];
                 };
             };
         };
@@ -477,9 +477,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Todo"];
-                "application/x-www-form-urlencoded": components["schemas"]["Todo"];
-                "multipart/form-data": components["schemas"]["Todo"];
+                "application/json": components["schemas"]["Task"];
+                "application/x-www-form-urlencoded": components["schemas"]["Task"];
+                "multipart/form-data": components["schemas"]["Task"];
             };
         };
         responses: {
@@ -488,7 +488,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"];
+                    "application/json": components["schemas"]["Task"];
                 };
             };
         };
@@ -526,9 +526,9 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["PatchedTodo"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedTodo"];
-                "multipart/form-data": components["schemas"]["PatchedTodo"];
+                "application/json": components["schemas"]["PatchedTask"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedTask"];
+                "multipart/form-data": components["schemas"]["PatchedTask"];
             };
         };
         responses: {
@@ -537,7 +537,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"];
+                    "application/json": components["schemas"]["Task"];
                 };
             };
         };

@@ -227,7 +227,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Todo'
+                  $ref: '#/components/schemas/Task'
           description: ''
     post:
       operationId: api_todo_todos_create
@@ -237,13 +237,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Todo'
+              $ref: '#/components/schemas/Task'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Todo'
+              $ref: '#/components/schemas/Task'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Todo'
+              $ref: '#/components/schemas/Task'
         required: true
       security:
       - jwtAuth: []
@@ -252,7 +252,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todo'
+                $ref: '#/components/schemas/Task'
           description: ''
   /api/todo/todos/{id}/:
     get:
@@ -273,7 +273,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todo'
+                $ref: '#/components/schemas/Task'
           description: ''
     put:
       operationId: api_todo_todos_update
@@ -290,13 +290,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Todo'
+              $ref: '#/components/schemas/Task'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Todo'
+              $ref: '#/components/schemas/Task'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Todo'
+              $ref: '#/components/schemas/Task'
         required: true
       security:
       - jwtAuth: []
@@ -305,7 +305,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todo'
+                $ref: '#/components/schemas/Task'
           description: ''
     patch:
       operationId: api_todo_todos_partial_update
@@ -322,13 +322,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedTodo'
+              $ref: '#/components/schemas/PatchedTask'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedTodo'
+              $ref: '#/components/schemas/PatchedTask'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedTodo'
+              $ref: '#/components/schemas/PatchedTask'
       security:
       - jwtAuth: []
       responses:
@@ -336,7 +336,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todo'
+                $ref: '#/components/schemas/Task'
           description: ''
     delete:
       operationId: api_todo_todos_destroy
@@ -356,7 +356,7 @@ paths:
           description: No response body
 components:
   schemas:
-    PatchedTodo:
+    PatchedTask:
       type: object
       properties:
         url:
@@ -398,7 +398,7 @@ components:
           format: email
           title: Email address
           maxLength: 254
-    Todo:
+    Task:
       type: object
       properties:
         url:

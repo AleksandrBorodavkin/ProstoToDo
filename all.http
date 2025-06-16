@@ -1,0 +1,31 @@
+### Authorization by token, part 1. Retrieve and save token.
+POST http://127.0.0.1:8000/api/auth/token/
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+> {%
+    client.global.set("access", response.body.access);
+    client.global.set("refresh", response.body.refresh);
+%}
+
+### Authorization by token,
+GET http://127.0.0.1:8000/api/todo/todos/
+Authorization: Bearer {{access}}
+
+### Authorization by token, part 2. Use token to authorize.
+POST  http://127.0.0.1:8000/api/todo/todos/
+Authorization: Bearer {{access}}
+Content-Type: application/json
+
+{
+  "title": "string",
+  "description": "string",
+  "completed": true,
+  "created_at": "",
+  "id": 0,
+  "url": ""
+}
