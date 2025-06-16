@@ -4,36 +4,120 @@
  */
 
 export interface paths {
-    "/api/todos/": {
+    "/api/auth/accounts/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["api_todos_list"];
+        get: operations["api_auth_accounts_list"];
         put?: never;
-        post: operations["api_todos_create"];
+        post: operations["api_auth_accounts_create"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/todos/{id}/": {
+    "/api/auth/accounts/{id}/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["api_todos_retrieve"];
-        put: operations["api_todos_update"];
+        get: operations["api_auth_accounts_retrieve"];
+        put: operations["api_auth_accounts_update"];
         post?: never;
-        delete: operations["api_todos_destroy"];
+        delete: operations["api_auth_accounts_destroy"];
         options?: never;
         head?: never;
-        patch: operations["api_todos_partial_update"];
+        patch: operations["api_auth_accounts_partial_update"];
+        trace?: never;
+    };
+    "/api/auth/accounts/me/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_auth_accounts_me_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/token/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Takes a set of user credentials and returns an access and refresh JSON web
+         *     token pair to prove the authentication of those credentials. */
+        post: operations["api_auth_token_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/token/refresh/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Takes a refresh type JSON web token and returns an access type JSON web
+         *     token if the refresh token is valid. */
+        post: operations["api_auth_token_refresh_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/todo/todos/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_todo_todos_list"];
+        put?: never;
+        post: operations["api_todo_todos_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/todo/todos/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_todo_todos_retrieve"];
+        put: operations["api_todo_todos_update"];
+        post?: never;
+        delete: operations["api_todo_todos_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["api_todo_todos_partial_update"];
         trace?: never;
     };
 }
@@ -41,6 +125,8 @@ export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         PatchedTodo: {
+            /** Format: uri */
+            readonly url?: string;
             readonly id?: number;
             title?: string;
             description?: string;
@@ -48,13 +134,49 @@ export interface components {
             /** Format: date-time */
             readonly created_at?: string;
         };
+        PatchedUser: {
+            /** Format: uri */
+            readonly url?: string;
+            readonly id?: number;
+            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+            username?: string;
+            /**
+             * Email address
+             * Format: email
+             */
+            email?: string;
+        };
         Todo: {
+            /** Format: uri */
+            readonly url: string;
             readonly id: number;
             title: string;
             description?: string;
             completed?: boolean;
             /** Format: date-time */
             readonly created_at: string;
+        };
+        TokenObtainPair: {
+            username: string;
+            password: string;
+            readonly access: string;
+            readonly refresh: string;
+        };
+        TokenRefresh: {
+            readonly access: string;
+            refresh: string;
+        };
+        User: {
+            /** Format: uri */
+            readonly url: string;
+            readonly id: number;
+            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+            username: string;
+            /**
+             * Email address
+             * Format: email
+             */
+            email: string;
         };
     };
     responses: never;
@@ -65,7 +187,219 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    api_todos_list: {
+    api_auth_accounts_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"][];
+                };
+            };
+        };
+    };
+    api_auth_accounts_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["User"];
+                "application/x-www-form-urlencoded": components["schemas"]["User"];
+                "multipart/form-data": components["schemas"]["User"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    api_auth_accounts_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this user. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    api_auth_accounts_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this user. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["User"];
+                "application/x-www-form-urlencoded": components["schemas"]["User"];
+                "multipart/form-data": components["schemas"]["User"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    api_auth_accounts_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this user. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    api_auth_accounts_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this user. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedUser"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedUser"];
+                "multipart/form-data": components["schemas"]["PatchedUser"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    api_auth_accounts_me_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    api_auth_token_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TokenObtainPair"];
+                "application/x-www-form-urlencoded": components["schemas"]["TokenObtainPair"];
+                "multipart/form-data": components["schemas"]["TokenObtainPair"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenObtainPair"];
+                };
+            };
+        };
+    };
+    api_auth_token_refresh_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TokenRefresh"];
+                "application/x-www-form-urlencoded": components["schemas"]["TokenRefresh"];
+                "multipart/form-data": components["schemas"]["TokenRefresh"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenRefresh"];
+                };
+            };
+        };
+    };
+    api_todo_todos_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -84,7 +418,7 @@ export interface operations {
             };
         };
     };
-    api_todos_create: {
+    api_todo_todos_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -109,12 +443,12 @@ export interface operations {
             };
         };
     };
-    api_todos_retrieve: {
+    api_todo_todos_retrieve: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description A unique integer value identifying this todo. */
+                /** @description A unique integer value identifying this task. */
                 id: number;
             };
             cookie?: never;
@@ -131,12 +465,12 @@ export interface operations {
             };
         };
     };
-    api_todos_update: {
+    api_todo_todos_update: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description A unique integer value identifying this todo. */
+                /** @description A unique integer value identifying this task. */
                 id: number;
             };
             cookie?: never;
@@ -159,12 +493,12 @@ export interface operations {
             };
         };
     };
-    api_todos_destroy: {
+    api_todo_todos_destroy: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description A unique integer value identifying this todo. */
+                /** @description A unique integer value identifying this task. */
                 id: number;
             };
             cookie?: never;
@@ -180,12 +514,12 @@ export interface operations {
             };
         };
     };
-    api_todos_partial_update: {
+    api_todo_todos_partial_update: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                /** @description A unique integer value identifying this todo. */
+                /** @description A unique integer value identifying this task. */
                 id: number;
             };
             cookie?: never;

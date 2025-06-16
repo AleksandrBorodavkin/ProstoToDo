@@ -1,6 +1,12 @@
+from django.conf import settings
 from django.db import models
 
-class Todo(models.Model):
+class Task(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # Ссылка на модель из account
+        on_delete=models.CASCADE,
+        related_name='tasks'
+    )
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     completed = models.BooleanField(default=False)
